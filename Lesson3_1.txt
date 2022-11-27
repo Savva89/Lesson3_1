@@ -1,0 +1,39 @@
+hdfs dfs -put /home/cloudera/workspace/learn - поместили файлы
+hdfs dfs -ls /user/cloudera/learn - прочитали список файлов
+Found 4 items
+-rw-r--r--   1 cloudera cloudera     736519 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-1.txt
+-rw-r--r--   1 cloudera cloudera     770324 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-2.txt
+-rw-r--r--   1 cloudera cloudera     843205 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-3.txt
+-rw-r--r--   1 cloudera cloudera     697960 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-4.txt
+
+hdfs dfs -getmerge -nl /user/cloudera/learn/voyna-i-mir-tom-1.txt /user/cloudera/learn/voyna-i-mir-tom-2.txt /user/cloudera/learn/voyna-i-mir-tom-3.txt /user/cloudera/learn/voyna-i-mir-tom-4.txt voyna-i-mir-merged.txt - собрали все файлы в 1
+hdfs dfs -put /home/cloudera/workspace/learn/voyna-i-mir-merged.txt - поместим полученный файл в hdfs
+
+hdfs dfs -ls /user/cloudera/learn - посмотрели права до изменения
+Found 5 items
+-rw-r--r--   1 cloudera cloudera    3048012 2022-11-26 03:07 /user/cloudera/learn/voyna-i-mir-merged.txt
+-rw-r--r--   1 cloudera cloudera     736519 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-1.txt
+-rw-r--r--   1 cloudera cloudera     770324 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-2.txt
+-rw-r--r--   1 cloudera cloudera     843205 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-3.txt
+-rw-r--r--   1 cloudera cloudera     697960 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-4.txt
+
+hdfs dfs -chmod 755 /user/cloudera/learn/voyna-i-mir-merged.txt - Назначили права на файл
+hdfs dfs -ls /user/cloudera/learn - посмотрели права после изменения
+Found 5 items
+-rwxr-xr-x   1 cloudera cloudera    3048012 2022-11-26 03:07 /user/cloudera/learn/voyna-i-mir-merged.txt
+-rw-r--r--   1 cloudera cloudera     736519 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-1.txt
+-rw-r--r--   1 cloudera cloudera     770324 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-2.txt
+-rw-r--r--   1 cloudera cloudera     843205 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-3.txt
+-rw-r--r--   1 cloudera cloudera     697960 2022-11-26 02:41 /user/cloudera/learn/voyna-i-mir-tom-4.txt
+
+hdfs dfs -du -h /user/cloudera/learn/voyna-i-mir-merged.txt - посмотрели размер файла
+-rwxr-xr-x   1 cloudera cloudera      2.9 M 2022-11-26 03:07 /user/cloudera/learn/voyna-i-mir-merged.txt
+
+hdfs dfs -setrep -w 2 /user/cloudera/learn/voyna-i-mir-merged.txt - изменим фактор репликации на 2
+Replication 2 set: /user/cloudera/learn/voyna-i-mir-merged.txt
+
+hdfs dfs -du -h /user/cloudera/learn/voyna-i-mir-merged.txt - посмотрели размер после изменения фактора репликации
+2.9 M  5.8 M  /user/cloudera/learn/voyna-i-mir-merged.txt
+
+hdfs dfs -cat /user/cloudera/learn/voyna-i-mir-merged.txt |wc -l - посчитаем количество строк в файле
+10276
